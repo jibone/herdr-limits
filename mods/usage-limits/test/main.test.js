@@ -154,7 +154,7 @@ const SCENARIOS = {
   },
 
   async nothingInstalled() {
-    const s = session({ helpers: { "claude-usage.sh": missing, "codex-limits.sh": missing, "opencode-spend.sh": missing, "pi-spend.sh": missing } });
+    const s = session({ helpers: { "claude-usage.sh": missing, "codex-limits.sh": missing, "copilot-usage.sh": missing, "opencode-go-limits.sh": missing, "opencode-spend.sh": missing, "pi-spend.sh": missing } });
     s.start();
     await s.frame("first render");
     await s.frame("again");

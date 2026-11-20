@@ -109,7 +109,7 @@ Herdr docks nothing on its own.
   in JS, shell, Python, SQL or awk, file sizes.
 - CI runs the same `npm test` (`.github/workflows/tests.yml`) on Linux and
   macOS, one workflow each (`linux.yml`, `macos.yml`, so each has its README
-  badge), for every pull request and every push to the default branch; a
+  badge), for every pull request and every push to `master`; a
   pull request merges only when both pass.
 - `mods/usage-limits/test/main.test.js` runs the real `main.js` over host
   stand-ins and compares what it draws and does, click by click, with
