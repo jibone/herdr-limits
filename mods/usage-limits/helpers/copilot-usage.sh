@@ -3,6 +3,7 @@ NOT_INSTALLED=127
 NO_READING=1
 LOGIN_SHELL_DEADLINE_ROUNDS=50
 TOKEN_MARK=herdr-usage-limits-token=
+PRINT_TOKEN="printf '\\n%s%s\\n' \"\$0\" \"\${GH_TOKEN:-\$GITHUB_TOKEN}\""
 FIELDS='{plan: .copilot_plan, reset: .quota_reset_date_utc, quotas: .quota_snapshots}'
 
 GH=$(command -v "${HERDR_USAGE_GH_BIN:-gh}" 2>/dev/null) || exit "$NOT_INSTALLED"
@@ -15,7 +16,7 @@ ask_gh() {
 }
 
 token_your_terminal_sets() {
-  "${SHELL:-/bin/sh}" -ilc 'printf "\n%s%s\n" "$0" "${GH_TOKEN:-$GITHUB_TOKEN}"' "$TOKEN_MARK" </dev/null >"$dir/shell" 2>/dev/null &
+  "${SHELL:-/bin/sh}" -ilc "$PRINT_TOKEN" "$TOKEN_MARK" </dev/null >"$dir/shell" 2>/dev/null &
   pid=$!
   i=0
   while [ "$i" -lt "$LOGIN_SHELL_DEADLINE_ROUNDS" ] && kill -0 "$pid" 2>/dev/null; do
