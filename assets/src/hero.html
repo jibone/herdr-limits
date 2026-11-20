@@ -1,0 +1,179 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="icons.css">
+<style>
+  :root {
+    --fg: #ecece8; --muted: #a6a7a2; --dim: #7b7d79; --line: #34363a;
+    --hot: #e5868d; --warn: #dfc27e; --ok: #a3c58d; --track: #3a3c40;
+    --panel: #232427; --chip-bg: #2c3a35; --chip-fg: #8fd1b4;
+    --mint: #7fe0b8; --chrome: #17181a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 880px; height: 540px; overflow: hidden; }
+  body {
+    font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+    color: var(--fg); -webkit-font-smoothing: antialiased; position: relative;
+    background:
+      radial-gradient(60% 70% at 8% 18%, rgba(127,224,184,.16) 0%, rgba(127,224,184,0) 70%),
+      radial-gradient(55% 60% at 92% 95%, rgba(223,194,126,.10) 0%, rgba(223,194,126,0) 70%),
+      #101113;
+  }
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.2px);
+    background-size: 18px 18px;
+    -webkit-mask-image: linear-gradient(100deg, #000 0%, rgba(0,0,0,.55) 45%, transparent 75%);
+  }
+
+  .copy { position: absolute; left: 48px; top: 66px; width: 410px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; letter-spacing: .6px;
+    text-transform: uppercase; color: var(--mint); padding: 4px 10px 4px 8px; border-radius: 999px;
+    background: rgba(127,224,184,.08); box-shadow: inset 0 0 0 1px rgba(127,224,184,.25); }
+  .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); }
+  h1 { margin-top: 22px; font-size: 46px; line-height: 48px; font-weight: 750; letter-spacing: -1.6px; }
+  h1 em { font-style: normal; color: var(--mint); }
+  .lede { margin-top: 16px; font-size: 15.5px; line-height: 22px; color: var(--muted); width: 370px; }
+
+  .roster { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; width: 390px; }
+  .agent { display: flex; align-items: center; gap: 9px; padding: 8px 11px; border-radius: 9px;
+    background: rgba(255,255,255,.035); box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); font-size: 12.6px; }
+  .agent small { margin-left: auto; font-size: 10.4px; color: var(--dim); }
+  .agent .ico { width: 15px; height: 15px; }
+
+  .ico { display: inline-block; width: 14px; height: 14px; flex: none; background: center/contain no-repeat; }
+  .full { background-size: contain; }
+  .mask { background-color: currentColor; -webkit-mask: center/contain no-repeat; }
+  .claude { background-image: var(--i-claude); }
+  .codex { background-image: var(--i-codex); border-radius: 3px; }
+  .copilot { -webkit-mask-image: var(--i-copilot); color: var(--fg); }
+  .opencode { -webkit-mask-image: var(--i-opencode); color: var(--fg); }
+  .pi { -webkit-mask-image: var(--i-pi); color: var(--fg); }
+  .refresh { -webkit-mask-image: var(--i-refresh); color: var(--muted); }
+  .gear { -webkit-mask-image: var(--i-gear); color: var(--muted); }
+  .down { -webkit-mask-image: var(--i-down); color: var(--dim); width: 11px; height: 11px; }
+  .right { -webkit-mask-image: var(--i-right); color: var(--dim); width: 11px; height: 11px; }
+
+  .panel {
+    position: absolute; right: 22px; bottom: 58px; width: 366px;
+    background: var(--panel); border-radius: 11px; padding: 0 12px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    font-size: 11.6px;
+  }
+  .sec { border-bottom: 1px solid var(--line); }
+  .session { padding: 11px 0 9px; }
+  .session .top { display: flex; align-items: baseline; }
+  .session .top b { font-weight: 500; }
+  .session .top .dir { color: var(--dim); margin-left: 7px; }
+  .session .top .ctx { margin-left: auto; font-weight: 500; }
+  .session .sub { color: var(--dim); margin-top: 6px; font-size: 10.6px; }
+  .head { display: flex; align-items: center; gap: 7px; height: 32px; }
+  .head .name, .who .name { font-size: 12.4px; }
+  .chip { font-size: 9.6px; padding: 2px 5px; border-radius: 4px; background: var(--chip-bg); color: var(--chip-fg); }
+  .head .upd { margin-left: auto; color: var(--dim); font-size: 10.6px; }
+  .rows { padding-bottom: 6px; }
+  .row { display: grid; grid-template-columns: 1fr 112px 48px 54px; align-items: center; height: 22px; }
+  .row .lbl { color: var(--muted); }
+  .num { text-align: right; }
+  .time { text-align: right; color: var(--dim); }
+  .bar { position: relative; height: 4px; border-radius: 2px; background: var(--track); }
+  .bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; }
+  .bar u { position: absolute; top: -3px; width: 1.2px; height: 10px; background: #f2f2f2; border-radius: 1px; }
+  .fold { display: grid; grid-template-columns: auto 1fr 64px 48px 54px; align-items: center; height: 34px; }
+  .who { display: flex; align-items: center; gap: 7px; }
+  .fold .lbl { color: var(--dim); text-align: right; padding-right: 7px; white-space: nowrap; }
+  .spend { display: grid; grid-template-columns: auto 1fr 48px 54px; align-items: center; height: 34px; }
+  .spend .lbl { color: var(--dim); text-align: right; padding-right: 10px; font-size: 10.8px; }
+  .spend .num, .spend .time { color: var(--fg); font-weight: 500; }
+  .foot { display: flex; justify-content: flex-end; gap: 14px; padding: 9px 2px; }
+  .hot { color: var(--hot); } .warn { color: var(--warn); } .ok { color: var(--ok); }
+  i.hot { background: var(--hot); } i.warn { background: var(--warn); } i.ok { background: var(--ok); }
+
+  .status {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 36px;
+    display: flex; align-items: center; justify-content: flex-end; gap: 14px;
+    padding: 0 22px; background: var(--chrome); border-top: 1px solid #2a2c2f;
+    font-size: 11.6px; color: var(--muted); white-space: nowrap;
+  }
+  .status .grp { display: flex; align-items: center; gap: 8px; }
+  .status .seg { display: flex; align-items: center; gap: 5px; }
+  .status .s { color: var(--dim); font-size: 10.5px; }
+  .sep { flex: none; width: 1px; height: 14px; background: #46484c; }
+  .cursor { position: absolute; left: 30px; top: 8px; width: 15px; }
+</style></head>
+<body>
+  <div class="copy">
+    <span class="eyebrow"><i></i>A Herdr mod</span>
+    <h1>Track every<br>agent's <em>limits.</em></h1>
+    <p class="lede">Claude Code, Codex, Copilot and OpenCode Go on one bar in Herdr, with OpenCode and Pi tokens and your session's context on hover.</p>
+    <div class="roster">
+      <div class="agent"><span class="ico full claude"></span>Claude Code<small>limits</small></div>
+      <div class="agent"><span class="ico full codex"></span>Codex<small>limits</small></div>
+      <div class="agent"><span class="ico mask copilot"></span>Copilot<small>limits</small></div>
+      <div class="agent"><span class="ico mask opencode"></span>OpenCode Go<small>limits</small></div>
+      <div class="agent"><span class="ico mask opencode"></span>OpenCode<small>tokens</small></div>
+      <div class="agent"><span class="ico mask pi"></span>Pi<small>tokens</small></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="sec session">
+      <div class="top"><b>This session</b><span class="dir">demo-api</span><span class="ctx">ctx 96k</span></div>
+      <div class="sub">18 calls · 1 compaction · last: auto, 248k → 12k</div>
+    </div>
+    <div class="sec">
+      <div class="head"><span class="ico full claude"></span><span class="name">Claude</span><span class="chip">Max</span><span class="ico mask down"></span><span class="upd">updated 1 min ago</span></div>
+      <div class="rows">
+        <div class="row"><span class="lbl">5-hour</span><div class="bar"><i class="warn" style="width:81%"></i><u style="left:70%"></u></div><span class="num warn">81%</span><span class="time">1h 24m</span></div>
+        <div class="row"><span class="lbl">Weekly</span><div class="bar"><i class="ok" style="width:56%"></i><u style="left:61%"></u></div><span class="num ok">56%</span><span class="time">2d 17h</span></div>
+      </div>
+    </div>
+    <div class="sec fold">
+      <div class="who"><span class="ico full codex"></span><span class="name">Codex</span><span class="chip">Pro</span><span class="ico mask right"></span></div>
+      <span class="lbl">Weekly</span><div class="bar"><i class="ok" style="width:24%"></i><u style="left:35%"></u></div><span class="num ok">24%</span><span class="time">4d 13h</span>
+    </div>
+    <div class="sec fold">
+      <div class="who"><span class="ico mask copilot"></span><span class="name">Copilot</span><span class="chip">Pro</span><span class="ico mask right"></span></div>
+      <span class="lbl">Premium</span><div class="bar"><i class="hot" style="width:93%"></i><u style="left:68%"></u></div><span class="num hot">93%</span><span class="time">9d 2h</span>
+    </div>
+    <div class="sec">
+      <div class="head"><span class="ico mask opencode"></span><span class="name">OpenCode Go</span><span class="chip">Go</span><span class="ico mask down"></span><span class="upd">updated 1 min ago</span></div>
+      <div class="rows">
+        <div class="row"><span class="lbl">5-hour</span><div class="bar"><i class="ok" style="width:38%"></i><u style="left:52%"></u></div><span class="num ok">38%</span><span class="time">2h 24m</span></div>
+        <div class="row"><span class="lbl">Weekly</span><div class="bar"><i class="warn" style="width:72%"></i><u style="left:58%"></u></div><span class="num warn">72%</span><span class="time">2d 22h</span></div>
+        <div class="row"><span class="lbl">Monthly</span><div class="bar"><i class="ok" style="width:41%"></i><u style="left:47%"></u></div><span class="num ok">41%</span><span class="time">16d 5h</span></div>
+      </div>
+    </div>
+    <div class="sec spend">
+      <div class="who"><span class="ico mask opencode"></span><span class="name">OpenCode</span></div>
+      <span class="lbl">Tokens today / 7d</span><span class="num">318k</span><span class="time">2.4M</span>
+    </div>
+    <div class="sec spend">
+      <div class="who"><span class="ico mask pi"></span><span class="name">Pi</span></div>
+      <span class="lbl">Tokens today / 7d</span><span class="num">44k</span><span class="time">390k</span>
+    </div>
+    <div class="foot"><span class="ico mask refresh"></span><span class="ico mask gear"></span></div>
+  </div>
+
+  <div class="status">
+    <div class="grp"><span class="ico full claude"></span>
+      <div class="seg"><span class="s">5h</span><span class="warn">81% · 1h 24m</span></div>
+      <div class="seg"><span class="s">wk</span><span class="ok">56%</span></div>
+    </div>
+    <div class="sep"></div>
+    <div class="grp"><span class="ico full codex"></span>
+      <div class="seg"><span class="s">5h</span><span class="ok">12%</span></div>
+      <div class="seg"><span class="s">wk</span><span class="ok">24%</span></div>
+    </div>
+    <div class="sep"></div>
+    <div class="grp"><span class="ico mask copilot"></span>
+      <div class="seg"><span class="s">prem</span><span class="hot">93% · 9d 2h</span></div>
+    </div>
+    <div class="sep"></div>
+    <div class="grp"><span class="ico mask opencode"></span>
+      <div class="seg" style="position:relative"><span class="s">5h</span><span class="ok">38%</span><svg class="cursor" viewBox="0 0 17 24"><path d="M1 1 L1 19 L5.5 14.8 L8.6 22 L11.4 20.8 L8.4 13.8 L14.5 13.8 Z" fill="#fff" stroke="#000" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+      <div class="seg"><span class="s">wk</span><span class="warn">72% · 2d 22h</span></div>
+      <div class="seg"><span class="s">mo</span><span class="ok">41%</span></div>
+    </div>
+  </div>
+
+</body></html>

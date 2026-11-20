@@ -1,0 +1,10 @@
+# Auto-generated type declarations, written once by gpui-shell whenever
+# `herdr-app check` runs on a mod folder. Don't commit; regenerate by checking.
+gpui-kit.d.ts
+herdr.d.ts
+jsconfig.json
+
+.DS_Store
+.superpowers/
+docs/
+node_modules/
