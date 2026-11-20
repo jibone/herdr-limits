@@ -1,0 +1,37 @@
+name: tests
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  npm-test:
+    name: npm test
+    runs-on: ${{ inputs.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Tools the helpers and the checks run
+        run: |
+          if [ "$RUNNER_OS" = Linux ]; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq shellcheck sqlite3 lsof
+          else
+            command -v shellcheck >/dev/null || brew install shellcheck
+          fi
+          shellcheck --version | head -2
+          sqlite3 -version
+          python3 --version
+      - run: npm ci
+      - name: Mod tests, then the quality gate
+        run: npm test

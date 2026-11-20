@@ -1,0 +1,29 @@
+{
+  "minTokens": 50,
+  "minLines": 4,
+  "format": [
+    "javascript",
+    "bash",
+    "python",
+    "sql",
+    "awk"
+  ],
+  "ignore": [
+    "**/node_modules/**",
+    "**/fixtures/**",
+    "**/*.d.ts"
+  ],
+  "reporters": [
+    "json"
+  ],
+  "silent": true,
+  "formatsExts": {
+    "javascript": [
+      "js",
+      "mjs"
+    ],
+    "awk": [
+      "awk"
+    ]
+  }
+}

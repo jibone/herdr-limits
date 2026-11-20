@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test \"mods/*/test/*.test.js\" && node --test \"test/quality/*.test.js\"",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.15.0",
+    "eslint-plugin-sonarjs": "4.2.2",
+    "globals": "17.14.0",
+    "jscpd": "5.4.3"
+  },
+  "overrides": {
+    "eslint-plugin-sonarjs": {
+      "minimatch": "11.0.8"
+    }
+  }
+}
